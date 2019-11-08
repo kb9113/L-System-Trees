@@ -1,0 +1,73 @@
+// Quaking Aspen Tree By Caleb Manning
+
+baseWidth = 0.3
+baseLength = 4
+
+Q:
+    prevAng = 0
+    n = rnd * 2 + 7
+    for (i = 0; i < 8; i++)
+    {
+        offset = 1 - (baseWidth - w) / baseWidth
+        offset += i / 8 / 12
+        dAng = 30 + 85 * offset
+        bLen = 0;
+        if (offset <= 0.7)
+        {
+            bLen = 0.4 + 0.6 * offset / 0.7
+        }
+        else 
+        {
+            bLen = 0.4 + 0.6 * (1 - offset) / 0.3
+        }
+
+        / a = prevAng + 75 + rnd * 10
+        & a = dAng
+        ! w = w * 0.08 * bLen
+        [
+        F l = w / 2
+        A w = 0.08 * bLen, l = 0.6 * bLen
+        ]
+        ! w = w
+        ^ a = dAng
+        F l = l
+    }
+    Q w = Max(0, w - baseWidth / 11), l = l
+
+A:
+    wd = w / 14
+    prevRot = 0
+    n = rnd * 3 + 15.5
+    for (i = 0; i < n; i++)
+    {
+        wid = w - i * wd
+        lCount = ((n - ind) ^ 0.5 + 2) * 4 * l
+        ! w = wid
+        F l = l / 3
+        / a = prevRot + 140
+        & a = 60
+        ! w = wid * 0.4
+        [
+        F l = (n - i) ^ 0.5 * l / 3, leaves = lCount, leafDAng = 40, leafRAng = 140
+        ^ a = rnd * 30 + 30
+        F l = (n - i) ^ 0.5 * l / 4, leaves = lCount, leafDAng = 40, leafRAng = 140
+        %
+        ]
+        ! w = wid
+        ^ a = 60
+        \ a = prevRot + 140
+        + a = -5 + rnd * 10
+        ^ a = -7.5 + rnd * 15
+        prevRot += 140
+    }
+    F l = l / 2
+
+Axiom:
+    con = baseLength / 0.1
+    s = rnd * 0.2 + 0.9
+    for (i = 0; i < con; i++)
+    {
+        ! w = s * (baseWidth + ((con - i) / con) ^ 6 * 0.2)
+        F l = s * 0.1
+    }
+    Q w = s * baseWidth, l = s * 0.1

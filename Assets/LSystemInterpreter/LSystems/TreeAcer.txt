@@ -1,0 +1,79 @@
+// Acer Tree By Caleb Manning 
+
+nLeaves = 15
+widthD = 0.4 / 8
+lengthD = 0.1
+itterations = 9
+
+DAngle1 = rnd * 40 + 60
+DAngle2 = rnd * 40 + 100
+BranchAngle = rnd * 15 + 10
+
+F:
+    F l = l, leaves = 0
+
+A:
+    rand = rnd / (0.24 * l ^ 2.5)
+    if (l == 2)
+    {
+        rand = rand + 0.5
+    }
+    if (rand < 0.4)
+    {
+        [
+        F l = l / 2
+        ! w = w
+        & a = BranchAngle
+        F l = l / 2, leaves = nLeaves, leafDAngle = 40, leafRAngle = 140
+        A w = w - widthD, l = l - lengthD
+        ]
+    }
+    else if (rand < 0.8)
+    {
+        [
+        F l = l / 2
+        ! w = w
+        & a = BranchAngle
+        / a = 90
+        F l = l / 2, leaves = nLeaves, leafDAngle = 40, leafRAngle = 140
+        A w = w - widthD, l = l - lengthD
+        ]
+
+        [
+        ! w = w
+        ^ a = BranchAngle
+        \ a = 90
+        F l = l / 2, leaves = nLeaves, leafDAngle = 40, leafRAngle = 140
+        A w = w - widthD, l = l - lengthD
+        ]
+    }
+    else 
+    {
+        [
+        F l = l / 2
+        ! w = w
+        & a = BranchAngle
+        F l = l / 2, leaves = nLeaves, leafDAngle = 40, leafRAngle = 140
+        A w = w - widthD, l = l - lengthD
+        ]
+        / a = DAngle1
+        [
+        ! w = w
+        & a = BranchAngle
+        F l = l / 2, leaves = nLeaves, leafDAngle = 40, leafRAngle = 140
+        A w = w - widthD, l = l - lengthD
+        ]
+        / a = DAngle2
+        [
+        ! w = w
+        & a = BranchAngle
+        F l = l / 2, leaves = nLeaves, leafDAngle = 40, leafRAngle = 140
+        A w = w - widthD, l = l - lengthD
+        ]
+    }
+
+Axiom:
+    ! w = 0.7
+    F l = 0.5
+    / a = 45
+    A w = 0.4, l = 2

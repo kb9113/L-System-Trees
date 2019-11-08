@@ -1,0 +1,59 @@
+// Palm Tree By Caleb Manning
+
+dt = 4
+tMax = 350
+pMax = 0.93
+
+Q:
+    propOff = t / tMax
+    if (propOff < 1)
+    {
+        ! w = 0.85 + 0.15 * Sin(t)
+        ^ a = rnd - 0.65
+
+        if (propOff > pMax)
+        {
+            dAng = 1 / (1 - pMax) * (1 - propOff) * 110 + 15
+            ! w = 0.1
+            for (i = 0; i < rnd * 2 + 5; i++)
+            {
+                rAng = t * 10 + i * (rnd * 50 + 40)
+                eDAng = dAng * (rnd * 0.4 + 0.8)
+                / a = rAng
+                & a = eDAng
+                [
+                A 
+                ]
+                ^ a = eDAng
+                \ a = rAng
+            }
+            F l = 0.05
+        }
+        else 
+        {
+            F l = 0.15
+        }
+        Q t = t + dt
+    }
+    else 
+    {
+        ! w = 0
+        F l = 0.15
+    }
+
+A:
+    num = rnd * 5 + 30
+    for (i = 0; i < num; i++)
+    {
+        dAng = (num - 1 - i) * (80 / num)
+        ! w = 0.1 - i * 0.1 / 15
+        F l = 0.1
+        L rAng = 50 * (rnd * 0.4 + 0.8), dAng = dAng * (rnd * 0.4 + 0.8)
+        L rAng = -50 * (rnd * 0.4 + 0.8), dAng = dAng * (rnd * 0.4 + 0.8)
+        & a = 1
+    }
+
+Axiom:
+    ! w = 0.2
+    / a = rnd * 360
+    Q t = 0

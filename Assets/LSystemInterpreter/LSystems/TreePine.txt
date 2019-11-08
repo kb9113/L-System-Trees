@@ -1,0 +1,63 @@
+// Pine Tree By Caleb Manning 
+
+lengthR = 0.8
+widthR = 0.8
+branchLengthR = 0.93
+secondBranceAngle = 80
+secondBranceAngleV = 30
+nLeaves = 300
+itterations = 15
+
+Q:
+    ! w = w
+    & a = 90
+    + a = rnd * 360
+    ! w = bw
+
+    bCount = (rnd * 2) + 5
+    loop(bCount)
+    {
+        rand = rnd * 130 / bCount
+        + a = rand
+        [
+        ^ a = 5 / Max(bl * bl, 0.05) - 30 * (rnd * 0.2 + 0.9)
+        A l = bl, w = bw
+        ]
+        + a = 360 / bCount - rand
+    }
+
+    ! w = w
+    $
+    F l = l, leaves = l * nLeaves / 3, leafDAngle = 20, leafRAngle = 140
+    Q w = w - 0.2 / 15, l = l * 0.95, bw = bw * widthR, bl = bl * branchLengthR
+    %
+
+A:
+    if (rnd < l)
+    {
+        ! w = w
+        ^ a = rnd * 15 - 5
+        F l = l, leaves = l * nLeaves / 3, leafDAngle = 40, leafRAngle = 140
+        - a = ang / 2
+        [
+        A l = l * lengthR, w = w * widthR
+        ]
+        + a = ang
+        [
+        A l = l * lengthR, w = w * widthR
+        ]
+        - a = ang / 2
+        A l = l * lengthR, w = w * widthR
+    }
+    else 
+    {
+        ! w = w
+        ^ a = rnd * 15 - 5
+        F l = l, leaves = l * nLeaves / 3, leafDAngle = 40, leafRAngle = 140
+        A l = l * lengthR, w = w * widthR
+    }
+
+Axiom:
+    ! w = 0.2
+    F 1 = 0.6
+    Q w = 0.2, bw = 0.05, l = 0.5, bl = 0.4
