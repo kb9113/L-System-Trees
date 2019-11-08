@@ -17,15 +17,19 @@ public class LLangInterpreter
 	const string defintionPatturn = @"^\s*(?'Symbol'[^(\{|\}|\s)]):\s*$";
 	const string axiomPatturn = @"^\s*Axiom:\s*$";
 	const string emptyLine = @"^\s*$";
-	Dictionary<string, string> stdFuntions = new Dictionary<string, string>();
+	
 
-	const string includes = "using System;\nusing System.Collections;\nusing System.Collections.Generic;\n\n";
+	const string includes = "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\n\n";
 	StringBuilder codeString = new StringBuilder();
-	//string codeString = "";
+	Dictionary<string, string> stdFuntions = new Dictionary<string, string>();
+	Dictionary<string, ILLangInterface> stdInterfaces = new Dictionary<string, ILLangInterface>();
+	
 	int lineNumber = 1;
 	int tabs = 0;
 	Stack<string> varsToAdd = new Stack<string>(); // added on open scope
 	Stack<List<string>> variables = new Stack<List<string>>();
+
+	List<string> definitons = new List<string>();
 
 	public string GenerateCode(string className, string raw)
 	{
@@ -35,12 +39,11 @@ public class LLangInterpreter
 
 		foreach (string line in lines)
 		{
+			if (Regex.IsMatch(line, emptyLine)) continue;
 			lineNumber++;
+			if (Regex.IsMatch(line, commentPatturn)) continue;
+
 			Match match;
-			if (Regex.IsMatch(line, commentPatturn) || Regex.IsMatch(line, emptyLine))
-			{
-				continue;
-			}
 			if ((match = Regex.Match(line, assignPatturn)).Success)
 			{
 				string name = "";
@@ -114,7 +117,7 @@ public class LLangInterpreter
 				continue;
 			}
 			// divide by 2 since we are splititng at \n and \r
-			Debug.Log("UnableToPase Line: " + lineNumber / 2);
+			Debug.Log("UnableToPase Line: " + lineNumber);
 		}
 		if (isInDefintion) EndDefinition();
 		CloseClass();
@@ -173,10 +176,19 @@ public class LLangInterpreter
 		stdFuntions.Add("Sin", "Math.Sin");
 		stdFuntions.Add("Cos", "Math.Cos");
 		stdFuntions.Add("Tan", "Math.Tan");
+		
+		stdFuntions.Add("Pow", "Math.Pow");
+
+		// add std interfaces
+		stdInterfaces.Add("Tree", new TreeInterface());
 	}
 
 	public void CloseClass()
 	{
+		// impliment interface
+		codeString.Append(stdInterfaces["Tree"].GetImplimentation(definitons.ToArray() ,variables.Peek().ToArray()));
+
+		// close the class
 		CloseScope();
 	}
 
@@ -257,21 +269,6 @@ public class LLangInterpreter
 				result = Regex.Replace(result, "\\b" + number + "\\b", number + ".0");
 			}
 		}
-		// escape powers
-		matchs = Regex.Matches(result, @"[\s\+\-\*/\^\(](?'ToReplace'(?'Base'[\w\[\]""\.]+)\s*\^\s*(?'Power'[\w\[\]""\.]+))[\s\+\-\*/\^\)]");
-		foreach (Match m in matchs)
-		{
-			string baseString = "";
-			string powerString = "";
-			string toReplace = "";
-			foreach(Group g in m.Groups)
-			{
-				if (g.Name == "Base") baseString = g.Value;
-				if (g.Name == "Power") powerString = g.Value;
-				if (g.Name == "ToReplace") toReplace = g.Value;
-			}
-			result = result.Replace(toReplace, "Math.Pow(" + baseString + ", " + powerString + ")");
-		}
 		return result;
 	}
 
@@ -312,6 +309,7 @@ public class LLangInterpreter
 
 	public void StartAxiom()
 	{
+		definitons.Add("Axiom");
 		AddLine("public static List<LSymbol> Axiom()\n");
 		OpenScope();
 		AddLine("List<LSymbol> symbols = new List<LSymbol>();\n");
@@ -319,6 +317,7 @@ public class LLangInterpreter
 
 	public void StartDefinition(string name)
 	{
+		definitons.Add(name);
 		AddLine("public static List<LSymbol> " + name + "(LSymbol sym)\n");
 		OpenScope();
 		AddLine("List<LSymbol> symbols = new List<LSymbol>();\n");

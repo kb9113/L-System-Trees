@@ -3,17 +3,23 @@
 nLeaves = 15
 widthD = 0.4 / 8
 lengthD = 0.1
-itterations = 9
 
 DAngle1 = rnd * 40 + 60
 DAngle2 = rnd * 40 + 100
 BranchAngle = rnd * 15 + 10
 
+// interface vars
+itterations = 9
+tropismX = 0
+tropismY = -1
+tropismZ = 0
+initialWidth = 0.7
+
 F:
     F l = l, leaves = 0
 
 A:
-    rand = rnd / (0.24 * l ^ 2.5)
+    rand = rnd / (0.24 * Pow(l, 2.5))
     if (l == 2)
     {
         rand = rand + 0.5

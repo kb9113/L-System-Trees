@@ -53,17 +53,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\LSystemInterpreter\ILLangInterface.cs" />
+     <Compile Include="Assets\LSystemInterpreter\Interfaces\TreeInterface.cs" />
      <Compile Include="Assets\LSystemInterpreter\LLangInterpreter.cs" />
      <Compile Include="Assets\LSystemInterpreter\LLangUtility.cs" />
      <Compile Include="Assets\LSystemInterpreter\LSymbol.cs" />
+     <Compile Include="Assets\LSystemInterpreter\LSystemItterator.cs" />
      <Compile Include="Assets\LSystemInterpreter\LSystems\TreeAcer.cs" />
      <Compile Include="Assets\LSystemInterpreter\LSystems\TreePalm.cs" />
      <Compile Include="Assets\LSystemInterpreter\LSystems\TreePine.cs" />
-     <Compile Include="Assets\LSystemInterpreter\Token.cs" />
+     <Compile Include="Assets\LSystemInterpreter\LSystems\TreeQuakingAspen.cs" />
      <Compile Include="Assets\MeshData\IMeshPrimative.cs" />
      <Compile Include="Assets\MeshData\MeshData.cs" />
      <Compile Include="Assets\MeshData\MeshTriangle.cs" />
-     <Compile Include="Assets\MeshData\StandardPrimatives\CurvedCylinder.cs" />
+     <Compile Include="Assets\MeshData\StandardPrimatives\Noodle.cs" />
      <Compile Include="Assets\MeshData\StandardPrimatives\Sphere.cs" />
      <Compile Include="Assets\Test.cs" />
      <Compile Include="Assets\TextureNodes\BlendNode.cs" />
@@ -71,6 +74,9 @@
      <Compile Include="Assets\TextureNodes\NormaliseNode.cs" />
      <Compile Include="Assets\TextureNodes\TextureNode.cs" />
      <Compile Include="Assets\TextureNodes\ValueNode.cs" />
+     <Compile Include="Assets\TreeGen\Branch.cs" />
+     <Compile Include="Assets\TreeGen\Tree.cs" />
+     <Compile Include="Assets\TreeGen\Turtle.cs" />
      <None Include="Assets\LSystemInterpreter\LSystems\TreePalm.txt" />
      <None Include="Assets\LSystemInterpreter\LSystems\TreeQuakingAspen.txt" />
      <None Include="Assets\LSystemInterpreter\LSystems\TreePine.txt" />

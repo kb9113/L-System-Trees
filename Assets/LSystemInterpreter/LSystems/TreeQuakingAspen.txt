@@ -41,16 +41,16 @@ A:
     for (i = 0; i < n; i++)
     {
         wid = w - i * wd
-        lCount = ((n - ind) ^ 0.5 + 2) * 4 * l
+        lCount = (Pow(n - ind, 0.5) + 2) * 4 * l
         ! w = wid
         F l = l / 3
         / a = prevRot + 140
         & a = 60
         ! w = wid * 0.4
         [
-        F l = (n - i) ^ 0.5 * l / 3, leaves = lCount, leafDAng = 40, leafRAng = 140
+        F l = Pow(n - i, 0.5) * l / 3, leaves = lCount, leafDAng = 40, leafRAng = 140
         ^ a = rnd * 30 + 30
-        F l = (n - i) ^ 0.5 * l / 4, leaves = lCount, leafDAng = 40, leafRAng = 140
+        F l = Pow(n - i, 0.5) * l / 4, leaves = lCount, leafDAng = 40, leafRAng = 140
         %
         ]
         ! w = wid
@@ -67,7 +67,7 @@ Axiom:
     s = rnd * 0.2 + 0.9
     for (i = 0; i < con; i++)
     {
-        ! w = s * (baseWidth + ((con - i) / con) ^ 6 * 0.2)
+        ! w = s * (baseWidth + (Pow(con - i) / con, 6) * 0.2)
         F l = s * 0.1
     }
     Q w = s * baseWidth, l = s * 0.1
