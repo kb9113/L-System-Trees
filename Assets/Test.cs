@@ -11,8 +11,11 @@ public class Test : MonoBehaviour
 
 	void Start()
 	{
+		//LSystemItterator itterator = TreeAcer.GetItterator();
+		//tree = new Tree(itterator, 9, Vector3.down, 0.7f);
+
 		LSystemItterator itterator = TreePine.GetItterator();
-		tree = new Tree(itterator, 9, Vector3.down, 0.7f);
+		tree = new Tree(itterator, 15, Vector3.down, 0.2f);
 		CreateAsTree();
 		
 	}

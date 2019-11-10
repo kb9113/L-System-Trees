@@ -26,7 +26,6 @@ public class LSystemItterator
 			if (rules.ContainsKey(sym.letter))
 			{
 				Rule rule = rules[sym.letter];
-				Debug.Log(sym.letter);
 				outputString.AddRange(rule(sym));
 			}
 			else 

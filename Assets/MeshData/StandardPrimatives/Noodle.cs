@@ -10,12 +10,14 @@ public class Noodle : IMeshPrimative
 	Func<float, float> widthFunc;
 
 	int resolution;
+	int widthResolution;
 
-    public Noodle(Func<float, Vector3> curveShapeFunc, Func<float, float> widthFunc, int resolution = 20)
+    public Noodle(Func<float, Vector3> curveShapeFunc, Func<float, float> widthFunc, int resolution = 10, int widthResolution = 8)
     {
         this.curveShapeFunc = curveShapeFunc;
         this.widthFunc = widthFunc;
         this.resolution = resolution;
+		this.widthResolution = widthResolution;
     }
 
 	public MeshData GetMeshData()
@@ -40,7 +42,7 @@ public class Noodle : IMeshPrimative
 		}
 		xNormal = xNormal.normalized;
 		Vector3 yNormal = Vector3.Cross(tangent, xNormal).normalized;
-		Vector3[,] verts = new Vector3[resolution + 1, resolution];
+		Vector3[,] verts = new Vector3[resolution + 1, widthResolution];
 		for (int i = 0; i <= resolution; i++)
 		{
 			if (i != 0)
@@ -50,9 +52,9 @@ public class Noodle : IMeshPrimative
 				xNormal = Vector3.Cross(yNormal, tangent).normalized;
 				yNormal = Vector3.Cross(tangent, xNormal).normalized;
 			}
-			for (int j = 0; j < resolution; j++)
+			for (int j = 0; j < widthResolution; j++)
 			{
-				float theta = Mathf.Lerp(0, 2 * Mathf.PI, j / (float)resolution);
+				float theta = Mathf.Lerp(0, 2 * Mathf.PI, j / (float)widthResolution);
 				Vector3 v = widths[i] * (Mathf.Cos(theta) * xNormal + Mathf.Sin(theta) * yNormal);
 				verts[i, j] = v + points[i];
 			}
@@ -62,11 +64,11 @@ public class Noodle : IMeshPrimative
 		MeshData md = new MeshData();
 		for (int i = 0; i < resolution; i++)
 		{
-			for (int j = 0; j < resolution; j++)
+			for (int j = 0; j < widthResolution; j++)
 			{
 				Vector3 v1 = verts[i, j];
-				Vector3 v2 = verts[i, (j + 1) % resolution];
-				Vector3 v3 = verts[i + 1, (j + 1) % resolution];
+				Vector3 v2 = verts[i, (j + 1) % widthResolution];
+				Vector3 v3 = verts[i + 1, (j + 1) % widthResolution];
 				Vector3 v4 = verts[i + 1, j];
 				md.AddQuad(v1, v2, v3, v4);
 			}

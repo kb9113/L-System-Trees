@@ -72,7 +72,7 @@ public class TreePine
 	{
 		List<LSymbol> symbols = new List<LSymbol>();
 		symbols.Add(new LSymbol('!', new Dictionary<string, double>() { {"w", 0.2} }));
-		symbols.Add(new LSymbol('F', new Dictionary<string, double>() { {"1", 0.6} }));
+		symbols.Add(new LSymbol('F', new Dictionary<string, double>() { {"l", 0.6} }));
 		symbols.Add(new LSymbol('Q', new Dictionary<string, double>() { {"w", 0.2}, {"bw", 0.05}, {"l", 0.5}, {"bl", 0.4} }));
 		return symbols;
 	}

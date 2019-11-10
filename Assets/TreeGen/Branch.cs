@@ -59,6 +59,8 @@ public class Branch : IMeshPrimative
 		float tl = (points.Count - 1) * t;
 		int PrevNode = Mathf.FloorToInt(tl);
 		int NextNode = Mathf.CeilToInt(tl);
+		if (NextNode >= points.Count) return points[points.Count - 1];
+		if (PrevNode < 0) return points[0];
 		return Vector3.Lerp(points[PrevNode], points[NextNode], tl - PrevNode);
 	}
 
@@ -67,12 +69,14 @@ public class Branch : IMeshPrimative
 		float tl = (widths.Count - 1) * t;
 		int PrevNode = Mathf.FloorToInt(tl);
 		int NextNode = Mathf.CeilToInt(tl);
+		if (NextNode >= widths.Count) return widths[widths.Count - 1];
+		if (PrevNode < 0) return widths[0];
 		return Mathf.Lerp(widths[PrevNode], widths[NextNode], tl - PrevNode);
 	}
 
 	public MeshData GetMeshData()
 	{
-		Noodle branch = new Noodle(InterpolateAlongPoints, InterpolateAlongWidths, (points.Count - 1) * 8);
+		Noodle branch = new Noodle(InterpolateAlongPoints, InterpolateAlongWidths, points.Count);
 		return branch.GetMeshData();
 	}
 }
