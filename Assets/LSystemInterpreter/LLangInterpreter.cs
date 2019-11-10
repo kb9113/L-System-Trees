@@ -22,7 +22,6 @@ public class LLangInterpreter
 	const string includes = "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\n\n";
 	StringBuilder codeString = new StringBuilder();
 	Dictionary<string, string> stdFuntions = new Dictionary<string, string>();
-	Dictionary<string, ILLangInterface> stdInterfaces = new Dictionary<string, ILLangInterface>();
 	
 	int lineNumber = 1;
 	int tabs = 0;
@@ -178,18 +177,35 @@ public class LLangInterpreter
 		stdFuntions.Add("Tan", "Math.Tan");
 		
 		stdFuntions.Add("Pow", "Math.Pow");
-
-		// add std interfaces
-		stdInterfaces.Add("Tree", new TreeInterface());
 	}
 
 	public void CloseClass()
 	{
 		// impliment interface
-		codeString.Append(stdInterfaces["Tree"].GetImplimentation(definitons.ToArray() ,variables.Peek().ToArray()));
+		codeString.Append(ItteratorCode());
 
 		// close the class
 		CloseScope();
+	}
+
+	public string ItteratorCode()
+	{
+		string result = "\tpublic static LSystemItterator GetItterator()\n";
+		result += "\t{\n";
+		result += "\t\treturn new LSystemItterator(\n";
+		result += "\t\t\tnew Dictionary<char, LSystemItterator.Rule>() {\n";
+		foreach (string def in definitons)
+		{
+			if (def == "Axiom") continue;
+			result += "\t\t\t\t{ '"+ def + "', " + def + " }";
+			if (def != definitons.Last()) result += ",\n";
+			else result += "\n";
+		}
+		result += "\t\t\t},\n";
+		result += "\t\t\tAxiom()\n";
+		result += "\t\t);\n";
+		result += "\t}\n";
+		return result;
 	}
 
 	public void AddLocalVar(string name, string expression)

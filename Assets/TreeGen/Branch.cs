@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Branch 
+public class Branch : IMeshPrimative
 {
 	public List<Vector3> points;
 	public List<float> widths;
@@ -53,8 +53,26 @@ public class Branch
 		children.Add(child);
 	}
 
+	// interpolates through the points array 0 <= t <= 1
+	public Vector3 InterpolateAlongPoints(float t)
+	{
+		float tl = (points.Count - 1) * t;
+		int PrevNode = Mathf.FloorToInt(tl);
+		int NextNode = Mathf.CeilToInt(tl);
+		return Vector3.Lerp(points[PrevNode], points[NextNode], tl - PrevNode);
+	}
+
+	public float InterpolateAlongWidths(float t)
+	{
+		float tl = (widths.Count - 1) * t;
+		int PrevNode = Mathf.FloorToInt(tl);
+		int NextNode = Mathf.CeilToInt(tl);
+		return Mathf.Lerp(widths[PrevNode], widths[NextNode], tl - PrevNode);
+	}
+
 	public MeshData GetMeshData()
 	{
-		return null;
+		Noodle branch = new Noodle(InterpolateAlongPoints, InterpolateAlongWidths, (points.Count - 1) * 8);
+		return branch.GetMeshData();
 	}
 }

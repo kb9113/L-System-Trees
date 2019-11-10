@@ -1,5 +1,9 @@
 ## Depends On
 * LSystemInterpreter/LSystems for all the tree l systems
+* MeshData
+
+## TODO
+* change the brach lerp funtions to use quadratic splines and update resolution calc
 
 ## files
 * Turtle.cs - the turtle that moves around adding branches used in Tree.cs

@@ -33,6 +33,7 @@ Q:
     %
 
 A:
+    ang = rnd * secondBranceAngleV + secondBranceAngle
     if (rnd < l)
     {
         ! w = w

@@ -13,11 +13,6 @@ public class TreeAcer
 	public static double DAngle1 =>  rnd * 40.0 + 60.0;
 	public static double DAngle2 =>  rnd * 40.0 + 100.0;
 	public static double BranchAngle =>  rnd * 15.0 + 10.0;
-	public static double itterations =>  9.0;
-	public static double tropismX =>  0.0;
-	public static double tropismY =>  -1.0;
-	public static double tropismZ =>  0.0;
-	public static double initialWidth =>  0.7;
 	public static List<LSymbol> F(LSymbol sym)
 	{
 		List<LSymbol> symbols = new List<LSymbol>();
@@ -95,16 +90,14 @@ public class TreeAcer
 		symbols.Add(new LSymbol('A', new Dictionary<string, double>() { {"w", 0.4}, {"l", 2.0} }));
 		return symbols;
 	}
-	public static Tree GenerateTree()
+	public static LSystemItterator GetItterator()
 	{
-		LSystemItterator sys = new LSystemItterator(
+		return new LSystemItterator(
 			new Dictionary<char, LSystemItterator.Rule>() {
 				{ 'F', F },
 				{ 'A', A },
 			},
 			Axiom()
 		);
-		sys.Itterate((int)itterations);
-		return Tree.ParseTree(sys.GetString().ToArray(), new Vector3((float)tropismX, (float)tropismY, (float)tropismZ), (float)initialWidth);
 	}
 }

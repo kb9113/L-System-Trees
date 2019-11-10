@@ -72,4 +72,14 @@ public class TreePalm
 		symbols.Add(new LSymbol('Q', new Dictionary<string, double>() { {"t", 0.0} }));
 		return symbols;
 	}
+	public static LSystemItterator GetItterator()
+	{
+		return new LSystemItterator(
+			new Dictionary<char, LSystemItterator.Rule>() {
+				{ 'Q', Q },
+				{ 'A', A },
+			},
+			Axiom()
+		);
+	}
 }

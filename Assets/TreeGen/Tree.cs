@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class Tree 
+public class Tree : IMeshPrimative
 {
     Branch root;
 
@@ -12,6 +12,13 @@ public class Tree
         this.root = root;
     }
 
+	public Tree(LSystemItterator itterator, int nItterations, Vector3 tropism, float inniatalWidth)
+	{
+		itterator.Itterate(nItterations);
+		LSymbol[] instructionString = itterator.GetString().ToArray();
+		this.root = ParseTree(instructionString, tropism, inniatalWidth).root;
+	}
+
     public Branch GetRoot()
     {
         return root;
@@ -19,16 +26,17 @@ public class Tree
 
     public MeshData GetMeshData()
     {
-        List<Branch> undrawnBranches = new List<Branch>() { root };
+        Stack<Branch> undrawnBranches = new Stack<Branch>();
+		undrawnBranches.Push(root);
 		MeshData md = new MeshData();
 		while (undrawnBranches.Count > 0)
 		{
-			md.AddMesh(undrawnBranches[0].GetMeshData());
-			foreach (Branch b in undrawnBranches[0].children)
+			Branch curr = undrawnBranches.Pop();
+			md.AddPrimative(curr);
+			foreach (Branch b in curr.children)
 			{
-				undrawnBranches.Add(b);
+				undrawnBranches.Push(b);
 			}
-			undrawnBranches.RemoveAt(0);
 		}
         return md;
     }

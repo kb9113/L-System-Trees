@@ -29,6 +29,7 @@ public class MeshData
 
 	void AddTriangle(MeshTriangle tri)
 	{
+		if (tri.v1 == tri.v2 || tri.v2 == tri.v3 || tri.v1 == tri.v3) return;
 		if (!verts.ContainsKey(tri.v1)) createVertex(tri.v1);
 		if (!verts.ContainsKey(tri.v2)) createVertex(tri.v2);
 		if (!verts.ContainsKey(tri.v3)) createVertex(tri.v3);

@@ -42,20 +42,21 @@ public class TreePine
 	public static List<LSymbol> A(LSymbol sym)
 	{
 		List<LSymbol> symbols = new List<LSymbol>();
+		double ang = rnd * secondBranceAngleV + secondBranceAngle;
 		if (rnd < sym["l"])
 		{
 			symbols.Add(new LSymbol('!', new Dictionary<string, double>() { {"w", sym["w"]} }));
 			symbols.Add(new LSymbol('^', new Dictionary<string, double>() { {"a", rnd * 15.0 - 5.0} }));
 			symbols.Add(new LSymbol('F', new Dictionary<string, double>() { {"l", sym["l"]}, {"leaves", sym["l"] * nLeaves / 3.0}, {"leafDAngle", 40.0}, {"leafRAngle", 140.0} }));
-			symbols.Add(new LSymbol('-', new Dictionary<string, double>() { {"a", sym["ang"] / 2.0} }));
+			symbols.Add(new LSymbol('-', new Dictionary<string, double>() { {"a", ang / 2.0} }));
 			symbols.Add(new LSymbol('['));
 			symbols.Add(new LSymbol('A', new Dictionary<string, double>() { {"l", sym["l"] * lengthR}, {"w", sym["w"] * widthR} }));
 			symbols.Add(new LSymbol(']'));
-			symbols.Add(new LSymbol('+', new Dictionary<string, double>() { {"a", sym["ang"]} }));
+			symbols.Add(new LSymbol('+', new Dictionary<string, double>() { {"a", ang} }));
 			symbols.Add(new LSymbol('['));
 			symbols.Add(new LSymbol('A', new Dictionary<string, double>() { {"l", sym["l"] * lengthR}, {"w", sym["w"] * widthR} }));
 			symbols.Add(new LSymbol(']'));
-			symbols.Add(new LSymbol('-', new Dictionary<string, double>() { {"a", sym["ang"] / 2.0} }));
+			symbols.Add(new LSymbol('-', new Dictionary<string, double>() { {"a", ang / 2.0} }));
 			symbols.Add(new LSymbol('A', new Dictionary<string, double>() { {"l", sym["l"] * lengthR}, {"w", sym["w"] * widthR} }));
 		}
 		else
@@ -74,5 +75,15 @@ public class TreePine
 		symbols.Add(new LSymbol('F', new Dictionary<string, double>() { {"1", 0.6} }));
 		symbols.Add(new LSymbol('Q', new Dictionary<string, double>() { {"w", 0.2}, {"bw", 0.05}, {"l", 0.5}, {"bl", 0.4} }));
 		return symbols;
+	}
+	public static LSystemItterator GetItterator()
+	{
+		return new LSystemItterator(
+			new Dictionary<char, LSystemItterator.Rule>() {
+				{ 'Q', Q },
+				{ 'A', A },
+			},
+			Axiom()
+		);
 	}
 }
