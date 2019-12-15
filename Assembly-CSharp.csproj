@@ -69,6 +69,7 @@
      <Compile Include="Assets\MeshData\StandardPrimatives\Noodle.cs" />
      <Compile Include="Assets\MeshData\StandardPrimatives\Sphere.cs" />
      <Compile Include="Assets\Test.cs" />
+     <Compile Include="Assets\TextureData\TextureData.cs" />
      <Compile Include="Assets\TextureNodes\BlendNode.cs" />
      <Compile Include="Assets\TextureNodes\DisplayNode.cs" />
      <Compile Include="Assets\TextureNodes\NormaliseNode.cs" />
