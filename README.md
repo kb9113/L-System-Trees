@@ -83,7 +83,7 @@ Axiom:
     A w = 0.4, l = 2
 ```
 The generated mesh looks like this
-<img src="/home/kb911/Documents/Procedural-Gem/images/acer.png">
+<img src="images/acer.png">
 
 ## Pine Tree Example
 The domain specific langage for an pine tree is below
@@ -152,4 +152,4 @@ Axiom:
     Q w = 0.2, bw = 0.05, l = 0.5, bl = 0.4
 ```
 The generated mesh looks like this
-<img src="/home/kb911/Documents/Procedural-Gem/images/pine.png">
+<img src="images/pine.png">
